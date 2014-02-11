@@ -29,7 +29,7 @@ class Friend
       return bestResolved
     else   
       @guessAirport = true 
-      Rails.logger.info("Guessed at airport for " + @location.inspect)
+      # Rails.logger.info("Guessed at airport for " + @location.inspect)
       return AirportCodeFinder.new.bestGuessByState(@location['name'].split(',')[-1].strip)
     end    
   end  

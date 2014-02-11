@@ -1,6 +1,6 @@
 # Be sure to restart your server when you modify this file.
 
-Fbmaps::Application.config.session_store :cookie_store, key: '_fbmaps_session'
+Fbmaps::Application.config.session_store :cookie_store, key: '_frappy_session'
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
