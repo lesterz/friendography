@@ -1,0 +1,118 @@
+body {
+  background-color: #eeeeee;
+}
+
+#map-canvas {
+    position: relative;
+    border-radius: 0px 0px 0px 0px !important;
+    margin-top: 0px;
+    height: 550px;
+    width: 75%;
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #E588D4;
+}
+
+.friends_list {
+  border:2px solid grey; 
+  padding: 5px; 
+  max-height: 200px; 
+  overflow: auto
+}
+
+.navbar {
+    margin-top: -50px;
+    margin-bottom: 0px;
+    width: 100%;
+    background: rgb(10, 10, 10);
+    background: rgba(10, 10, 10, 1.0);
+    border-color: #555555;
+    border-radius: 0px 0px 0px 0px !important;
+}
+
+.navbar-right a {
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  color: #ff3399;
+}
+
+.navbar-right a:hover {
+  color: #6688ff !important;
+}
+
+.navbar-nav li a {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+@media all {
+  .navbar-right { margin-top: 40px;}
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar-right { margin-top: 0px;}
+}
+
+.navbar-header {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.navbar-header h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-family: fredericka-the-great, sans-serif;
+    font-style: bold;
+    color: #ff3399;
+}
+.navbar-header h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-family: amatic-sc, sans-serif;
+    font-style: bold;
+    color: #6688ff;
+}
+.navbar-form {
+    color: #ff3399;
+}
+/* .form-search {
+   margin-top: -15px;
+   width: 250px;
+} */
+.form-control {
+   margin-bottom: -10px;
+}
+.navbar .nav > li > a {
+   color: #ff3399;
+   margin-top: 15px;
+}
+.col-lg-3 .heading {
+    font-family: amatic-sc, sans-serif;
+    font-style: bold;
+    color: #111111;
+}
+
+.col-lg-6 .heading {
+  margin-top: 5px;    
+    font-family: amatic-sc, sans-serif;
+    font-style: bold;
+    color: #6688ff;
+}
+.form-search .btn {
+   margin-bottom: 10px;
+   color: #ff3399;
+   background-color: #5A4C56;
+}
+@media (min-width: 1024px) {
+ .navbar-header button {
+    margin-top: -50px;
+}
+}
+@media (max-width: 720px) {
+ .navbar-header h1, h2 {
+    margin-left: 10px;
+ }
+ .navbar-header button {
+    margin-top: -50px;
+}
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Friendography search results page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <script type="text/javascript" src="http://use.edgefonts.net/amatic-sc;fredericka-the-great.js"></script>
+  </head>
+
+  <body>   
+	<div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+	        <div class="col-lg-4">
+	          <div class="navbar-header">
+		      <h1>Friendography</h1>
+		      <h2>Travel Social &#9992;</h2>	      
+		    </div> <!-- navbar header -->
+        </div>
+        <div class="col-lg-4">
+          <div id="show-search" class="show-search">
+		    <% if cookies["use_fb"] %>
+			    <div id="search-logged-in" class="search-logged-in">
+				    <div class="col-lg-6" align="center">
+					  <h3 class="heading">Find your friends.</h3>
+					  <div class="form-search">
+					    <%= render "shared/search_fields" %>
+					  </div>
+					</div>
+				</div>
+			<% else %>
+				<div id="search-logged-out" class="search-logged-out">
+					<div class="col-lg-6" align="center" style="top: 20px">
+					  <h3 class="heading">Log into Facebook to find your friends.</h3>			  
+					</div>
+				</div>
+			<% end %>
+		</div>
+       </div>
+        <div class="col-lg-4">
+          <ul class="nav navbar-nav navbar-right">
+			<li><a href="#aboutModal" data-toggle="modal">About</a></li>
+			<li><a href="#contactModal" data-toggle="modal">Feedback</a></li>
+			<li><a><%= render "shared/login" %></a></li>
+      	  </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal -->
+	<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">A little bit about us</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<ul class="nav nav-tabs">
+			  <li class="active"><a href="#aboutData" data-toggle="tab">About</a></li>
+			  <li><a href="#faqData" data-toggle="tab">FAQ</a></li>
+			</ul>
+			<div class="tab-content">
+		      <div class="tab-pane active" id="aboutData">
+		      	<%= render partial: "shared/about" %>  
+		      </div>
+		      <div class="tab-pane" id="faqData">
+		      	<%= render partial: "shared/faq" %>
+		      </div>
+		    </div> 	      		        	         
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Get in touch with us</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div id="feedback_canvas" style="">
+	    		<%= render partial: "shared/feedback" %>
+	    	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+    <% if false %> <!-- set to true for debugging -->			
+      <div class="friends_list">
+       	 <p>
+		  	<table>
+		  	  <% @friends.each do |friend| %>
+		  	  <tr>
+		  	    <%= friend.name %> lives in 
+		  	    <% if friend.location %>
+		  	      <%= friend.location['name'] %>
+		  	      <% else %>
+		  	      An Undisclosed Location
+		  	    <% end %>	    
+		  	    <% if friend.location %>
+		  	      <%= friend.latitude %> & <%= friend.longitude %>
+		  	    <% end %>
+		  	  </tr><br/>
+		  	  <% end %>
+		  	</table>
+       	 </p>
+      </div>
+    <% end %>		
+
+	<div class="resultsDiv" style="display: inline">
+		<div id="map-canvas">
+	      <%= render partial: "shared/map" %>
+	    </div>
+	    
+	    <div id="params-canvas" style="position: relative; top: -550px; float: right; width: 25%; padding: 0px 5px 0px 5px;">
+	    	<%= render partial: "shared/params" %>	
+	    </div>
+	    <div id="flights_canvas" style="position: relative; top: -510px; right: -25%; float: right; width: 25%; padding: 0px 5px 0px 5px;">
+	    	<%= render partial: "shared/flights" %>
+	    </div>	    
+	</div> 
+	
+	<div id="footer">
+		<%= render partial: "shared/footer" %>
+	</div>
+    
+    <% if Rails.env.production? %> 
+    	<%= render 'layouts/ga' %>
+    <% end %>      
+        
+  </body>
+
+</html>

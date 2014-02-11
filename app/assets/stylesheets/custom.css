@@ -1,0 +1,50 @@
+html, body {
+    margin-right: 0px;
+    margin-left:  0px;
+    height: 100%;
+}
+
+.modal-header {
+	padding: 12px 15px 12px 15px;
+	background-color: #f7f7f9;
+}
+
+.modal-footer {
+	margin: 0px;
+	padding: 10px 15px 10px 15px;
+	background-color: #f7f7f9;
+}
+
+.navbar.transparent.navbar-default .navbar-inner
+{
+    background-image: none;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ff3399;
+}
+
+.navbar-inverse .navbar-text {
+    color: #ff3399;
+}
+
+.navbar-inverse .navbar-link {
+    color: #00bfff;
+}
+
+.popover {
+    width: 1000px;
+}
+
+.panel-default {
+	border: none;
+	box-shadow: none;
+}
+
+.panel-title {
+	font-size: 14px;
+}
+
+.ui-datepicker { 
+	font-size: 7pt !important; 
+}

@@ -1,0 +1,12 @@
+/* default body */
+body {
+    background: #222222;     
+}
+/* body for splash page */
+body.splash { 
+    background: url(image-path('map.jpg')) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

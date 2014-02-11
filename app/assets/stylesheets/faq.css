@@ -1,0 +1,9 @@
+#faq {
+	padding-top: 20px;
+}
+
+.faqQuestion {
+	display: inline; 
+	font-size: 15px; 
+	font-weight: bold;
+}

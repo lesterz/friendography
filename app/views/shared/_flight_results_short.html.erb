@@ -1,0 +1,30 @@
+<!DOCTYPE >
+<html>
+	<div class="results">
+		<div class="topFlightsDisplay">
+			<% @solutions.first(1).each do | solution | %>
+				<div class="flightParams" style="font-size: 10px">
+					<div style="display: inline">Adults: <%= solution.adults %> &nbsp; </div>
+					<div style="display: inline;">From: <%= solution.slices[0].legs[0].departure.airport.cityName %> &nbsp; </div>
+					<div style="display: inline;">To: <%= solution.slices[0].legs[-1].arrival.airport.cityName %> &nbsp; </div>
+					<div style="display: inline">[ <%= solution.slices[0].legs[0].departure.time %> - <%= solution.slices[-1].legs[-1].arrival.time %> ] </div>
+				</div>
+			<% end %>
+		</div>
+		<% @solutions.first(1).each_with_index do | solution, index | %>
+			<div class="singleFlight">
+				<a href="<%= solution.deepLink %>" target="_blank" style="text-decoration: none; color: #333">				
+				<div class="costLink">
+					<%= solution.totalCost %><h6 style="display: inline"> on </h6>
+					<img src="/images/oww-logo.jpg" />
+				</div>
+				</a>
+				<div class="mairline" style="float: none">
+					<% solution.marketingAirlines.first(1).each do | marketingAirline | %>
+						<%= marketingAirline %> 
+					<% end %>
+				</div>								
+			</div>
+		<% end %>
+	</div>	
+</html>

@@ -1,0 +1,74 @@
+/*the basics, and works for FF*/
+#LoadingDiv {
+	display: none;
+	position:relative;
+	top: 20px;
+	z-index:9999;
+	clear:none;
+
+	/*background-color:#666666;
+	border:1px solid #000000;*/
+}
+/*IE will need an 'adjustment'
+* html #LoadingDiv {
+ 	position: absolute;
+ 	height: expression(document.body.scrollHeight &gt; document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+}*/
+
+button:hover {
+	text-decoration:none;
+}
+
+button::-moz-focus-inner { border: 0; }
+
+button:focus {outline:none;}
+
+.departDateBox {
+	display: block;
+	width: 65%;
+}
+
+.returnDateBox {
+	display: block;
+	width: 35%;
+}
+
+.results {
+	margin: 5px 0px 5px 0px;
+	padding: 5px 10px 5px 10px;
+	border-style: solid; 
+	border-width: 1px; 
+	border-color: #E588D4; 
+	font-family: Helvetica; 
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.singleFlight {  
+	
+}
+
+.slices {
+	float: left;
+}
+
+.slice {
+	float: left;
+}
+
+.legs {
+	float: right;
+}
+
+.leg {
+	float: left; 
+	font-size: smaller; 
+	line-height: 1.5; 
+	color: #ccc;
+}
+
+.mairline {
+	float: right; 
+	font-weight: bold; 
+	font-size: small;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE >
+<html>
+	<div class="results">
+		<% @solutions.first(1).each_with_index do | solution, index | %>
+			<div class="singleFlight">
+				<a href="<%= solution.deepLink %>" target="_blank" style="color: #333"><%= solution.totalCost %> </a>
+				<div class="mairline">
+					<% solution.marketingAirlines.each_with_index do | marketingAirline, index | %>
+						<%= marketingAirline %> 
+						<% if index == 0 %>
+							&harr;
+						<% end %>
+					<% end %>
+				</div>
+				<div class="slices">
+					<% solution.slices.each do | slice | %>
+						<div class="slice">
+							Travel Time: <%= slice.travelDuration %> &nbsp; <b>|</b> &nbsp;
+							<% if slice.legs.count == 1 %>
+								Non-stop
+							<% else %>
+								<%= slice.legs.count - 1 %> stop(s)
+							<% end %>							
+						</div>
+						<div class="legs">
+							<% slice.legs.each_with_index do | leg, index | %>
+								<div class="leg">
+									<%= leg.flightNumber %> &nbsp;
+								</div>
+							<% end %>	
+						</div>					
+					<% end %>
+				</div>		
+			</div>
+		<% end %>
+	</div>
+	
+</html>

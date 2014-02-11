@@ -1,0 +1,22 @@
+<div id="wrap">
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Friendography</h1>
+      <h2>go where your friends are</h2>
+      <h2 style="color: #0099de;">&#9992;</h2>
+      <% if @name %>
+        <h2>thanks for visiting, <%= @name %>!</h2>
+        <h2>let's stay in touch.</h2>
+      <% else %>
+        <h2>we are under construction...</h2>
+        <h2>share your email for updates :)</h2>
+        <%= form_tag("/splash", method: "get", :class => "form-signin") do %>
+          <%= email_field(:user, :address) %>
+          <%= submit_tag("submit", :class => "btn btn-primary") %>
+        <% end %>
+      <% end %>
+      <h1></h1>
+      <a>&copy 2013 Friendography&middot;Map data &copy 2013 Google</a>
+    </div>
+  </div>
+</div>

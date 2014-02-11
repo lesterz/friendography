@@ -1,0 +1,31 @@
+#splash .jumbotron
+{
+    background: rgb(25, 25, 25);
+    background: rgba(25, 25, 25, .7);
+    text-align: center;
+    height: auto;
+}
+
+#splash h1
+{
+    color: #ff3399;
+    font-family: fredericka-the-great, sans-serif;
+    font-style: bold;
+    font-weight: 500;
+}
+
+#splash h2
+{
+    color: #eeeeee;
+    font-family: amatic-sc, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+#splash a
+{
+    color: #ff3399;
+    font-family: amatic-sc, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+}

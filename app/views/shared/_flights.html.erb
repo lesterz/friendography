@@ -1,0 +1,23 @@
+<section class="flights">
+	<!-- hidden div that has spinner image -->
+	<div id="LoadingDiv" align="center">
+		<img src="/images/AjaxThrober.gif" alt=""/>
+	</div>
+	<div class="flightResults">
+		
+	</div>	        
+</section>
+
+<script>
+	$(document).ajaxStart(function() {
+		$('.flightResults').hide();
+		var ldiv = document.getElementById('LoadingDiv');
+		ldiv.style.display='block';
+	});	
+	
+	$(document).ajaxComplete(function() {
+		var ldiv = document.getElementById('LoadingDiv');
+		ldiv.style.display='none';
+		$('.flightResults').show();
+	});		
+</script>

@@ -1,0 +1,217 @@
+<section class="mapSection">
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.9/src/markerclusterer.js"></script>
+	<script type="text/javascript">
+		// Enable the visual refresh
+		google.maps.visualRefresh = true;
+		var map;
+		var markers = [];
+		var markerClusterer;		
+		// var oms = new OverlappingMarkerSpiderfier(map);
+		
+		function initialize() {				
+			var mapOptions = {
+			    zoom: 2,
+			    center: new google.maps.LatLng(12.50000, -39.50000), // Default center to middle 
+			    mapTypeId: google.maps.MapTypeId.ROADMAP,
+			    scrollwheel: true
+			};
+			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			mcOptions = {
+				gridSize: 50, maxZoom: 15, zoomOnClick: false, styles: [{
+						height: 20,
+						width: 20,
+						url: "/images/small.png"
+					},
+					{	height: 40,
+						width: 40,
+						url: "/images/medium.png"
+					},
+					{	height: 60,
+						width: 60,
+						url: "/images/large.png"
+					}]					
+			};
+			markerClusterer = new MarkerClusterer(map, [], mcOptions);
+			clusterInfoWindow = new google.maps.InfoWindow({
+				pixelOffset: new google.maps.Size(0, -10),
+				disableAutoPan: true
+			});	
+			<% if @currentUser %>			
+				bindClusterInfoWindow(markerClusterer, map, clusterInfoWindow, "<%= @currentUser.bestAirport %>");				
+		  	<% end %>
+		  
+		  	<% if (!@currentUser.nil?) %>
+			// All the map customization when user is logged in goes below...				
+				map.setCenter(new google.maps.LatLng(12.50000, <%= @currentUser.longitude %>));
+				<% if @currentUser.latitude && @currentUser.longitude %>
+					<% userAirport = @currentUser.bestAirport %>
+					var icon = {
+					     url: "/images/star-0061C0.png",
+					     scaledSize: new google.maps.Size(30, 30),
+					     anchor: new google.maps.Point(15, 15) 
+					 };
+					marker = new google.maps.Marker({
+						position: new google.maps.LatLng(<%= @currentUser.latitude %>, <%= @currentUser.longitude %>),
+						map: map,
+						icon: icon,
+						title: "Me!",
+						draggable: false,
+						clickable: true,
+						visible: true,
+						zIndex: 0,
+						cityLocation: "<%= @currentUser.location['name'] %>",
+						name: "Me"
+					});
+					markers.push(marker);
+					<% if @currentUser.picture %>
+						htmlContent = '<td><img src="<%= @currentUser.picture['data']['url'] %>"/></td>'+
+										'<td><a href="<%= @currentUser.link %>" target="_blank"><%= @currentUser.name %></a>'+
+										'<br><%= @currentUser.location['name'] %></td>';
+					<% else %> 
+						htmlContent = '<td><a href="<%= @currentUser.link %>" target="_blank"><%= @currentUser.name %></a>'+
+										'<br><%= @currentUser.location['name'] %></td>';
+					<% end %>
+					markerWindow = new google.maps.InfoWindow();
+					markerWindow.setContent(htmlContent);
+					bindInfoWindow(marker, map, markerWindow, "<%= userAirport%>");
+				<% end %>	
+				
+				<% @friends.each do |friend| %>				
+					<% if friend.latitude && friend.longitude %>
+						<% userAirport = @currentUser.bestAirport %>
+						markerTitle = "";	
+						marker = new google.maps.Marker({													
+							position: new google.maps.LatLng(<%= friend.latitude %>, <%= friend.longitude %>),
+							map: map,
+							icon: {  
+					            path: google.maps.SymbolPath.CIRCLE,
+					            fillColor: '#FF66E6',
+					            fillOpacity: 0.8,
+					            strokeWeight: 0,
+					            scale: 7
+					         },
+							draggable: false,
+							clickable: true,
+							visible: true,
+							cityLocation: "<%= friend.location['name'] %>",
+							bestAirport: "<%= friend.bestAirport %>",
+							guessAirport: <%= friend.guessAirport %>,
+							name: "<%= friend.name %>"
+						});
+						markers.push(marker);
+						<% if friend.picture %>							
+							htmlContent = '<td><img src="<%= friend.picture['data']['url'] %>"/></td>' + 
+											'<td><a href="<%= friend.link %>" target="_blank"><%= friend.name %></a>' +
+											'<br><%= friend.location['name'] %></td>';							
+						<% else %> 
+							htmlContent = '<td><img src="/images/small.png"/></td>' + 
+											'<td><a href="<%= friend.link %>" target="_blank"><%= friend.name %></a>' +
+											'<br><%= friend.location['name'] %></td>';
+						<% end %>
+						markerTitle = htmlContent;
+						marker.setTitle(markerTitle);
+						markerWindow = new google.maps.InfoWindow();
+						markerWindow.setContent(htmlContent);
+						bindInfoWindow(marker, map, markerWindow, "<%= userAirport%>");
+						
+						markerClusterer.addMarker(marker, true);
+					<% end %>
+				<% end %>
+			<% end %>
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+		
+		function bindInfoWindow(marker, map, markerWindow, userAirport) {
+		    google.maps.event.addListener(marker, 'click', function() {
+		    	singleCity = marker.cityLocation.split(',')[0]
+				if (marker.guessAirport) {
+					destLine = "&nbsp; See Flights near "+singleCity
+				} else {
+					destLine = "&nbsp; See Flights to "+singleCity
+				}
+		    	markerWindowContent = "<div id='markerWindowContent' style='max-width: 240px'>";
+		    	if (marker.name != 'Me' && marker.bestAirport != 'None') {
+		    		markerWindowContent += "<div id='seeFlightsBox' style='position: relative; margin-bottom: 2px; border-style: solid; border-width: 1px; border-color: #E588D4;'><a href='/search_flights?adults=1&from="+userAirport+"&where_to="+marker.bestAirport+"' data-remote='true', style='font-weight: bold; text-decoration: none;'><img src='/images/flights_button_20x20.jpg'/>"+destLine+"</a></div>";
+		    	}
+		    	markerWindowContent += "<div style='width: 220px; height: 54px'><table><tr><div>"+marker.getTitle()+"</div></tr>";
+				markerWindowContent += '</table></div></div>';
+		    	markerWindow.setContent(markerWindowContent);
+		    	markerWindow.open(map, marker);
+		    });
+		    
+		    google.maps.event.addListener(marker, 'mouseover', function() {
+		    	// markerWindow.open(map, marker); - instead do nothing 'cuz tooltip window would look ugly :(
+		    });
+		}
+		
+		function bindClusterInfoWindow(markerClusterer, map, infoWindow, userAirport) {
+		    google.maps.event.addListener(markerClusterer, 'click', function (mCluster) {  
+		    	infoWindow.setPosition(mCluster.getCenter()); 
+		    	
+		    	var uniqs = {};
+		    	var uniqCityNames = {};
+		    	for (i = 0; i < mCluster.getMarkers().length; i++) {	    		
+		    		uniqs[mCluster.getMarkers()[i].bestAirport] = (uniqs[mCluster.getMarkers()[i].bestAirport] || 0) + 1;
+		    		uniqCityNames[mCluster.getMarkers()[i].cityLocation.split(',')[0]] = (uniqCityNames[mCluster.getMarkers()[i].cityLocation.split(',')[0]] || 0) + 1;
+		    	}		    		    	
+		    	
+		    	var max = { val: mCluster.getMarkers()[0].bestAirport, count: 1 };
+		    	var maxName = { val: mCluster.getMarkers()[0].cityLocation, count: 1 };
+			    for(var u in uniqs) {
+			        if (max.count < uniqs[u]) { 
+			        	max = { val: u, count: uniqs[u] };
+			        }
+			    }
+			    
+			    for(var v in uniqCityNames) {
+			        if (maxName.count < uniqCityNames[v]) { 
+			        	maxName = { val: v, count: uniqCityNames[v] };
+			        }
+			    }
+			    
+			    var exactAirport = false;
+			    for (i = 0; i < mCluster.getMarkers().length; i++) {
+			    	if (max.val == mCluster.getMarkers()[i].bestAirport) {
+			    		exactAirport = mCluster.getMarkers()[i].guessAirport;
+			    		break;
+			    	}			    	
+			    }
+			    
+			    if (exactAirport) {
+			    	destLine =  "&nbsp; See Flights near "+maxName.val.split(',')[0]
+			    } else {
+			    	destLine =  "&nbsp; See Flights to "+maxName.val.split(',')[0]
+			    }
+			    
+		    	clusterContent = "<div id='clusterInfoWindowContent' style='max-width: 220px'>";		    			    			    	
+		    	if (map.getZoom() > 3 && max.val != "None" && max.val != userAirport) {
+		    		clusterContent += "<div id='seeFlightsBox' style='margin-bottom: 2px; border-style: solid; border-width: 1px; border-color: #E588D4;'><a href='/search_flights?adults=1&from="+userAirport+"&where_to="+max.val+"' data-remote='true', style='font-weight: bold; text-decoration: none;'><img src='/images/flights_button_20x20.jpg'/>"+destLine+"</a></div>";	
+		    	}
+		    	clusterContent += "<div id='innerClusterInfoWindowContent' style='max-height: 180px'><table>";
+		    	for (i = 0; i < mCluster.getSize(); i++) {
+		    		clusterContent += "<tr>";
+		    		clusterContent += mCluster.getMarkers()[i].getTitle();
+		    		clusterContent += "</tr>";		    		
+		    	}
+		    	clusterContent += "</table></div></div>";
+		    	infoWindow.setContent(clusterContent);
+			    infoWindow.open(map);
+			});
+		}
+		
+		function clearMap(map) {
+			for (var i = 0; i < markers.length; i++) {
+		    	markers[i].setMap(null);			    	
+		  	}
+		  	markers = [];
+		  	markerClusterer.clearMarkers();
+		}
+
+		function shopFlights() {
+			console.log("Testing ...")
+		}
+
+	</script>	
+</section>

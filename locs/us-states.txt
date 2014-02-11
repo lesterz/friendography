@@ -1,0 +1,56 @@
+Alaska,61.3850,-152.2683
+Alabama,32.7990,-86.8073
+American Samoa,-14.2417,-170.7197
+Arkansas,34.9513,-92.3809
+Arizona,33.7712,-111.3877
+California,36.1700,-119.7462
+Colorado,39.0646,-105.3272
+Connecticut,41.5834,-72.7622
+District of Columbia,38.8964,-77.0262
+Delaware,39.3498,-75.5148
+Florida,27.8333,-81.7170
+Georgia,32.9866,-83.6487
+Guam,13.4666,144.7833
+Hawaii,21.1098,-157.5311
+Iowa,42.0046,-93.2140
+Idaho,44.2394,-114.5103
+Illinois,40.3363,-89.0022
+Indiana,39.8647,-86.2604
+Kansas,38.5111,-96.8005
+Kentucky,37.6690,-84.6514
+Louisiana,31.1801,-91.8749
+Massachusetts,42.2373,-71.5314
+Maryland,39.0724,-76.7902
+Maine,44.6074,-69.3977
+Michigan,43.3504,-84.5603
+Minnesota,45.7326,-93.9196
+Missouri,38.4623,-92.3020
+Mississippi,32.7673,-89.6812
+Montana,46.9048,-110.3261
+North Carolina,35.6411,-79.8431
+North Dakota,47.5362,-99.7930
+Northern Mariana Islands,15.233,145.75
+Nebraska,41.1289,-98.2883
+New Hampshire,43.4108,-71.5653
+New Jersey,40.3140,-74.5089
+New Mexico,34.8375,-106.2371
+Nevada,38.4199,-117.1219
+New York,42.1497,-74.9384
+Ohio,40.3736,-82.7755
+Oklahoma,35.5376,-96.9247
+Oregon,44.5672,-122.1269
+Pennsylvania,40.5773,-77.2640
+Puerto Rico,18.45,-66.1
+Rhode Island,41.6772,-71.5101
+South Carolina,33.8191,-80.9066
+South Dakota,44.2853,-99.4632
+Tennessee,35.7449,-86.7489
+Texas,31.1060,-97.6475
+United States Virgin Islands,18.35,-64.9333
+Utah,40.1135,-111.8535
+Virginia,37.7680,-78.2057
+Vermont,44.0407,-72.7093
+Washington,47.3917,-121.5708
+Wisconsin,44.2563,-89.6385
+West Virginia,38.4680,-80.9696
+Wyoming,42.7475,-107.2085

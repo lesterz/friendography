@@ -1,0 +1,34 @@
+<section class="feedBack">
+	<div id="fbPageURL"><a href="http://www.facebook.com/friendography" target="_blank">http://www.facebook.com/friendography</a></div>
+	<div id="feedBackActivate" style="display: inline; cursor: pointer; font-size: 20px; font-weight: bold" title="Give Us Feedback - please!">
+		<img src="/images/calloutBox.png" />&nbsp;
+	</div>	
+	<div id="givefeedback" style="display: inline">Let us know what you think.</div>
+	<div id="thanks4feedback" style="display: none">Thanks for your feedback, we appreciate it.</div>
+	<div id="feedBackForm" style="display: block;">
+		<%= form_tag({controller: "search", action: "feedback"}, method: "get", remote: true, :class => "form-signin") do %>
+			<div id="personalData" style="padding: 15px 0px 15px 0px">
+				<div style="display: inline">
+					<div style="display: inline"><%= label_tag(:user, "email:") %></div>
+	          		<div style="display: inline"><%= email_field(:user, :address) %></div> &nbsp;
+				</div>
+				
+	          	<div style="display: inline">
+	          		<div style="display: inline"><%= label_tag(:user, "name:") %></div>
+	          		<div style="display: inline"><%= text_field(:user, :name) %></div>
+	          	</div>
+	     	</div>
+          	    
+          	<div id="textArea" style="padding: 0px 0px 15px 0px">      	
+	          	<%= text_area_tag(:message, "Give us some feedback, please.", size: "72x6") %>
+	      	</div>
+	      	<%= submit_tag("submit", :class => "btn btn-primary") %>	        
+        <% end %>
+	</div>	
+</section>
+
+<script>
+	$("#feedBackActivate").click(function() {				
+	  $( "#feedBackForm" ).slideToggle( "fast" );
+	});	
+</script>
