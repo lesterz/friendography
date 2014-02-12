@@ -86,11 +86,13 @@ class SearchController < ApplicationController
       logger.info("Session A.T.: " + session[:access_token].inspect)
       @status = "Sorry, need to re-authorize FB Login"
       flash[:notice] = "Error with OAuth"
-      redirect_to '/search/new.html'  # Hardwiring back to a view - not correct MVC, take the time to define a route
+      redirect_to action: 'handle500'  # Redirect to a "safer" 500 error page.
       
     rescue Koala::Facebook::OAuthSignatureError
       logger.info("Caught OauthSignatureError from get_user_from_cookie...")
-      redirect_to :back
+      logger.info("Cookies: " + cookies.inspect)
+      flash[:notice] = "Error with OAuth Signature Key"
+      redirect_to action: 'handle500' # Redirect to a "safer" 500 error page.
       
     # User not logged in OR something technical went wrong during auth OR Facebook blew up during some massive operation!
     rescue nil 
@@ -216,6 +218,14 @@ class SearchController < ApplicationController
       format.html
       format.js
     end
+  end
+  
+  def handle500
+    logger.info("Handling 500 Internal Server Error")
+    respond_to do | format |
+      format.html
+      format.js
+    end    
   end
   
 end

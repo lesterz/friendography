@@ -1,7 +1,6 @@
 Fbmaps::Application.routes.draw do
 
   get "search/search"
-  resources :search
 
   match 'splash', to: 'welcome#splash', via: [:get]
   match 'beta',   to: 'search#search', via: [:get]
@@ -9,6 +8,7 @@ Fbmaps::Application.routes.draw do
   match 'search_flights', to: 'search#search_flights', via: [:get]
   match 'set_params', to: 'search#set_params', via: [:get]
   match 'feedback', to: 'search#feedback', via: [:get]
+  match 'handle500', to: 'search#handle500', via: [:get]
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
