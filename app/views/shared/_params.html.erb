@@ -1,9 +1,11 @@
 <section class="searchParams" style="padding: 5px; border-style: solid; border-width: 1px; border-color: #E588D4; font-family: Helvetica;">		
-	<button id="customize" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Click to Customize">
-		Customize Dates 
-	</button>
-	<div id="paramsDisplayText" style="display: inline; font-size: 10px; overflow: hidden">&nbsp; <%=@defaultAdults%> Adult(s), <%= @defaultDepart.strftime("%B %-d") %> - <%= @defaultReturn.strftime("%B %-d") %></div>
-	<div id="customizeParams" style="display: none;">
+	<div class="customizeLine">
+		<button id="customize" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Toggle to Customize">
+			Customize Dates 
+		</button>
+		<div id="paramsDisplayText">&nbsp; <%=@defaultAdults%> Adult(s), <%= @defaultDepart.strftime("%B %-d") %> - <%= @defaultReturn.strftime("%B %-d") %></div>
+	</div>	
+	<div id="customizeParams" style="display: block;">
 		<%= form_tag({controller: "search", action: "set_params"}, method: "get", remote: true, class: "flight_params_form") do %>	
 			<div id="dates" style="display: inline">
 				<div id="departDate" style="float: left; display: block; padding-right: 15%; padding-bottom: 2%">
@@ -54,10 +56,10 @@
 	$("#customize").click(function() {	
 	  $('#customize').tooltip('toggle')			
 	  $( "#customizeParams" ).slideToggle( "fast" );
-	  if ($("#flights_canvas").css( "top" ) == "-430px" ) {
-		$("#flights_canvas").css( "top", "-510px" );
+	  if ($("#flights_canvas").css( "top" ) == "-510px" ) {
+		$("#flights_canvas").css( "top", "-430px" );
 	  } else {
-		$("#flights_canvas").css("top", "-430px");
+		$("#flights_canvas").css("top", "-510px");
 	  }
 	});		
 </script>

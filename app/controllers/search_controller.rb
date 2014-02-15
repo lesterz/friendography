@@ -3,7 +3,6 @@ require 'date'
 class SearchController < ApplicationController
 
   def initialize
-    @status = "nothing happened yet"
     @friends = []
   end
   
@@ -21,27 +20,13 @@ class SearchController < ApplicationController
         @defaultReturn = session[:returnDate]
         @defaultAdults = session[:adults]       
       end
-
-      logger.info("Called Search#Search  :")      
+     
       if (cookies["fbsr_"+FB_APP_ID].nil?)
         logger.info("Current User Not using Facebook")
         cookies["use_fb"] = false
-        return nil
       else        
         if (!session[:access_token].nil?)
-          # logger.info("Session: " + session.inspect)
-          # logger.info("Cookies: " + cookies.inspect)
-          oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_APP_SECRET)
-          fbIdInCookies = oauth.get_user_from_cookie(cookies)
           graph = Koala::Facebook::API.new(session[:access_token])
-          whoIsLoggedIn = graph.get_object("me")
-          if (fbIdInCookies != whoIsLoggedIn['id']) 
-            fbCookies = oauth.get_user_info_from_cookies(cookies)
-            extended_token = oauth.exchange_access_token_info(fbCookies['access_token'])
-            graph = Koala::Facebook::API.new(extended_token['access_token'])
-            session[:access_token] = extended_token['access_token']
-            session[:token_expiry] = DateTime.now + extended_token['expires'].to_i.seconds
-          end
           cookies["use_fb"] = true
         else
           oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_APP_SECRET)
@@ -54,7 +39,6 @@ class SearchController < ApplicationController
         end
         
         @me = graph.get_object("me", :fields => "id,name,link,picture.type(square),location,hometown")
-        # logger.info("logged in as: " + @me['name'])
         @currentUser = User.new(@me['id'], @me['name'], @me['hometown'], @me['location'], @me['picture'], @me['link'])
         if @me['location']
           fqlQuery = "SELECT location, name FROM page WHERE page_id = " + @me['location']['id']             
@@ -64,7 +48,6 @@ class SearchController < ApplicationController
         end
 
         fb_friendList = graph.get_connections("me", "friends?fields=id,name,link,picture.type(square),location,hometown")
-        @status = "Yeah, I have " + fb_friendList.size.to_s + " friends"
         
         fqlQuery = "SELECT location, name FROM page WHERE page_id in (SELECT current_location.id from user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()))"
         fb_locationNodes = graph.fql_query(fqlQuery)        
@@ -83,8 +66,6 @@ class SearchController < ApplicationController
     rescue Koala::Facebook::OAuthTokenRequestError
       logger.info("Caught OAuthException condition from oauth attempt")
       logger.info("Cookies: " + cookies.inspect)
-      logger.info("Session A.T.: " + session[:access_token].inspect)
-      @status = "Sorry, need to re-authorize FB Login"
       flash[:notice] = "Error with OAuth"
       redirect_to action: 'handle500'  # Redirect to a "safer" 500 error page.
       
@@ -97,15 +78,21 @@ class SearchController < ApplicationController
     # User not logged in OR something technical went wrong during auth OR Facebook blew up during some massive operation!
     rescue nil 
       logger.info("Caught nil condition from oauth attempt")
-      @status = "Something went wrong"
       flash[:notice] = "Error getting Facebook Data"
       redirect_to :back
     end
     
   end
   
+  def logout
+    session[:access_token] = nil
+    session[:departDate] = nil
+    session[:returnDate] = nil
+    session[:adults] = nil
+    redirect_to '/search'
+  end
+  
   def search_flights
-    logger.info("--------- Calling SearchFlights -----------")
 
     if session[:departDate] || session[:returnDate] || session[:adults]
       userParams = Hash.new
@@ -129,7 +116,6 @@ class SearchController < ApplicationController
  
     @solutions = SearchHelper::FlightSearch.new.search_flights(xmlRequest)
 
-    logger.info("------------ Finished SearchFlight -------------")
     respond_to do | format |
       format.html
       format.js
@@ -200,8 +186,6 @@ class SearchController < ApplicationController
     feedback_txt = "FreedBack from " + @name + " email: " + @email + "\n"
     feedback_txt += @message + "\n\n"
     feedback_txt += "Submitted at " + Time.now.to_s + " from " + request.remote_ip
-    
-    puts feedback_txt
     
     #send email address to friendography
     begin

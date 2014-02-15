@@ -1,5 +1,19 @@
 <section class="login">
 	<div id="fb-root"></div>
+	<div style="display: none; visibility:hidden">
+		<% if session['access_token'] %>
+			<%= titleText = "" %>
+		<% else %>
+			<%= titleText = "We never share your personal information" -%>
+		<% end %>
+	</div>
+	<div id="fbLoginBox" data-toggle="tooltip" data-placement="top" title="<%= titleText %>">
+		<div class="fblogin">
+		  <div class="fb-login-button" size="medium" autologoutlink="true" scope="friends_location, friends_hometown, user_location, user_hometown">
+		  </div>
+		</div>
+	</div>
+	<script>$('#fbLoginBox').tooltip()</script>
 	<script>
 	  window.fbAsyncInit = function() {
 	    // init the FB JS SDK
@@ -26,6 +40,11 @@
 		      searchLoggedOut();
 		      FB.login();
 		    }
+		  });
+		  
+		  FB.Event.subscribe("auth.logout", function() {
+		  	window.location = '/logout'
+		  	console.log('auth.logout event, logging out');
 		  });
 	  };
 	
@@ -59,11 +78,6 @@
     	
     	function searchLoggedOut() {
     		parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center" style="top: 20px"><h2 class="heading">Log into Facebook to find your friends.</h2</div> ';
-    	}		
-	</script>
-	
-	<div class="fblogin">
-	  <div class="fb-login-button" size="medium" autologoutlink="true" scope="friends_location, friends_hometown, user_location, user_hometown">
-	  </div>
-	</div>	
+    	}    		
+	</script>	
 </section>

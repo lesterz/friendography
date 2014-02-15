@@ -8,7 +8,6 @@ module SearchHelper
     def params(params)
       @params[:pointOfSale] = 'ORB'
       @params[:origin] = params[:from]
-      Rails.logger.info("User From param = " + params[:from])
       @params[:destination] = params[:where_to]
       if params[:adults].blank?
         @params[:adults] = 1
@@ -54,17 +53,18 @@ module SearchHelper
       request.content_type = 'UTF-8'
       request.content_length = xmlRequest.to_xml.length
       request.body = xmlRequest.to_xml
+      Rails.logger.info("Requesting flights now " + Time.now.to_s)
       response = http.request(request) # Live Request, be careful with these
       # reader = Nokogiri::XML::Reader(File.open("app/lib/data/test_flight_response.xml")) # Mock Reader Response
       # fileN = File.new("app/lib/data/test_flight_response_BER-LON.xml", "w")  # Write response to mock file
       # fileN.puts(response.body)
       parser = Nokogiri::XML::SAX::Parser.new(FlightResponseDoc.new)
-      #parser.parse(File.open("app/lib/data/test_flight_response_BER-NYC.xml")) # parse mock response with SAX
+      # parser.parse(File.open("app/lib/data/test_flight_response_BER-SEA.small.xml")) # parse mock response with SAX
+      Rails.logger.info("Returned, parsing now " + Time.now.to_s)
       parser.parse(response.body) # parse live response
       # reader = Nokogiri::XML::Reader(response.body)
       # Rails.logger.info(response.inspect)
-      # Rails.logger.info(response.body)
-        
+      # Rails.logger.info(response.body) 
       return parser.document.solutions
     end 
   end

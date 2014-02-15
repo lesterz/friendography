@@ -1,3 +1,15 @@
+.customizeLine {
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#paramsDisplayText {
+	display: inline-block; 
+	font-size: 10px; 
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 .dateInput {
 	display:block;
 }

@@ -187,7 +187,7 @@
 			    
 		    	clusterContent = "<div id='clusterInfoWindowContent' style='max-width: 220px'>";		    			    			    	
 		    	if (map.getZoom() > 3 && max.val != "None" && max.val != userAirport) {
-		    		clusterContent += "<div id='seeFlightsBox' style='margin-bottom: 2px; border-style: solid; border-width: 1px; border-color: #E588D4;'><a href='/search_flights?adults=1&from="+userAirport+"&where_to="+max.val+"' data-remote='true', style='font-weight: bold; text-decoration: none;'><img src='/images/flights_button_20x20.jpg'/>"+destLine+"</a></div>";	
+		    		clusterContent += "<div id='seeFlightsBox' style='margin-bottom: 2px; padding-right: 2px; border-style: solid; border-width: 1px; border-color: #E588D4;'><a href='/search_flights?adults=1&from="+userAirport+"&where_to="+max.val+"' data-remote='true', style='font-weight: bold; text-decoration: none; white-space: nowrap'><img src='/images/flights_button_20x20.jpg'/>"+destLine+"</a></div>";	
 		    	}
 		    	clusterContent += "<div id='innerClusterInfoWindowContent' style='max-height: 180px'><table>";
 		    	for (i = 0; i < mCluster.getSize(); i++) {

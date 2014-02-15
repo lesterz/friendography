@@ -1,0 +1,27 @@
+#fbLoginBox + .tooltip .tooltip-inner {
+	min-width: 220px;
+	max-width: 250px;
+	margin-right: 20px;
+	padding: 5px;
+	background-color: #f5f5f5;
+	color: #333333;
+	white-space: nowrap;
+	opacity: 1.0;
+	border: 1px solid #CCCCCC;
+	-webkit-box-shadow: 1px 1px 2px 1px #ccc;
+    -moz-box-shadow: 1px 1px 2px 1px #ccc;
+    box-shadow: 1px 1px 2px 1px #ccc;	
+}
+
+#fbLoginBox + .tooltip.top > .tooltip-arrow {
+    bottom:0;
+    left:50%;
+    margin-left:-5px;
+    border-top-color: #f5f5f5;
+    border-left:5px solid transparent;
+    border-right:5px solid transparent;
+    border-top:5px solid #CCC;
+    -webkit-box-shadow: 0px 0px 2px 0px #f5f5f5;
+    -moz-box-shadow: 0px 0px 2px 0px #f5f5f5;
+    box-shadow: 0px 0px 2px 0px #f5f5f5;
+}

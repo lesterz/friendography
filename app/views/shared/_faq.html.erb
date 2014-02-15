@@ -1,64 +1,98 @@
+<%# encoding: utf-8 %>
 <section id="faq">	
 	<div class="panel-group" id="accordion">
 	  <div class="panel panel-default">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#question1">
-	          <div class="faqQuestion">Q: </div>Where do the locations for friends come from?
+	          <div class="faqQuestion">Q: </div>What do I do? How does it work?
 	        </a>
 	      </h4>
 	    <div id="question1" class="panel-collapse collapse in">
 	      <div class="panel-body">
-	      	We get all locations on the map straight from Facebook for each friend.  Each locaiton has the same geocode pair that Facebook uses too.
+	      	<p>Log in with Facebook and give us the necessary permissions so we can see your friends' names, profile photos and current cities. Hit search, and when your friend map loads, zoom in to see where you have contacts.</p>
+			<p>Click on the pink bubbles to see which friends live in that area. Click on the "See flights to" bar at the top of the friend box to see airfares in the right pane.</p>
+			<p>You can customize your dates using the "Customize Dates" box.</p>
 	      </div>
 	    </div>
 	  </div>
 	  <div class="panel panel-default">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#question2">
-	          <div class="faqQuestion">Q: </div>Why is every airport not available?
+	          <div class="faqQuestion">Q: </div>Why do I have to log in with Facebook?
 	        </a>
 	      </h4>
 	    <div id="question2" class="panel-collapse collapse">
 	      <div class="panel-body">
-	      	There is no publicly available list of what airports are best for every city, so we're building that on our own from various sources and in some cases mapping the airports we feel are the best match by hand.  The list will improve over time, but indeed if there is glaring mismatch, please do contact us through the feedback form and let us know.
+	      	<p>Friendography is different from other online travel sites because we think local connections (e.g. friends, friends of friends) are important for deciding where to travel. You can get a richer experience with a place, its culture and people if you can get someone to give you the inside scoop. Heck, depending on how close the contact is, they might even let you crash on their couch or take you out with their friends!</p>
+			<p>Logging in with Facebook allows us to display your contacts geographically and give you a sense of who is where, and who you might enjoy your trip with. Without it, Friendography can't work :(</p>
+			<p><strong>Sign in with confidence. We won't share your private information or post to your timeline, ever.</strong></p> 
+			<p>That said, please do like us on Facebook and share us with your friends!</p>
 	      </div>
 	    </div>
 	  </div>
 	  <div class="panel panel-default">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#question3">
-	          <div class="faqQuestion">Q: </div>Where is Friendography from?
+	          <div class="faqQuestion">Q: </div>What information do you use from my Facebook account?
 	        </a>
 	      </h4>
 	    <div id="question3" class="panel-collapse collapse">
 	      <div class="panel-body">
-	      	We're in Berlin, it's a cool city, but heck we might branch out to other locations too.
+	      	<p>Once you give us permission, we ask Facebook for a list of your friends, their current cities and their profile photo. We use this to display your friends on the friend map.</p>
 	      </div>
 	    </div>
 	  </div>
 	  <div class="panel panel-default">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#question4">
-	          <div class="faqQuestion">Q: </div>Why should I log in with my Facebok account?
+	          <div class="faqQuestion">Q: </div>Why are some of my friends not showing up?
 	        </a>
 	      </h4>
 	    <div id="question4" class="panel-collapse collapse">
 	      <div class="panel-body">
-	      	The Friendography travel search service is entirely map driven, based on where your Facebook friends live to show you the best places to travel, so it only works with a Facebook login.
+	      	<p>Some of your friends may have privacy settings that prevents services like Friendography from seeing their current cities. Without that, we can't plot them on the map.</p>
 	      </div>
 	    </div>
 	  </div>
 	  <div class="panel panel-default">
 	      <h4 class="panel-title">
 	        <a data-toggle="collapse" data-parent="#accordion" href="#question5">
-	          <div class="faqQuestion">Q: </div>What do you do with my Facebook information?
+	          <div class="faqQuestion">Q: </div>Why is my friend showing up in the wrong location?
 	        </a>
 	      </h4>
 	    <div id="question5" class="panel-collapse collapse">
 	      <div class="panel-body">
-	      	When you log in with your Facebook account, we query Facebook for your friends who have elected to share the city or town they live in and plot it on the map, then use that list of locations to make the travel links.  That's it!  We do not store this information except to show it to you on your browser.  No storing, no sharing, no posting on your timeline.  But if you want to "Like" us or share us on your timeline, we would always appreciate the attention ;)
+	      	<p>We use the "current city" field on Facebook to figure out where your friends are. If they haven't updated this information, they'll show up in the wrong place. Write to them and tell them to update their current city!</p>
+	      	<p>If you think there's a bug or the map is displaying their location incorrectly, write to us in the feedback tab! Thanks for helping us improve Friendography!</p>
+	      </div>
+	    </div>
+	  </div>	  
+	  <div class="panel panel-default">
+	      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#question6">
+	          <div class="faqQuestion">Q: </div>I want to fly out of a different city. Why can't I change my departure city?
+	        </a>
+	      </h4>
+	    <div id="question6" class="panel-collapse collapse">
+	      <div class="panel-body">
+	      	<p>We use your "current city" on Facebook to figure out where you are and where you'd most likely fly from. All of your flights will originate from that location.</p> 
+			<p>We'll try to add a flexible departure feature in coming versions. Until then, you can click on the flight result and further customize it on our flight supplier's site.</p>
 	      </div>
 	    </div>
 	  </div>
+	  <div class="panel panel-default">
+	      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#question7">
+	          <div class="faqQuestion">Q: </div>Why does Friendography return flight options to a different city than the one my friend is in?
+	        </a>
+	      </h4>
+	    <div id="question7" class="panel-collapse collapse">
+	      <div class="panel-body">
+	      	<p>A lot of small towns and cities have airports, but they aren't serviced by our flight fulfillment suppliers or are too expensive to fly into. We try to strike a balance between price and convenience, but show results for major airports because fares are usually cheaper.</p>
+			<p>We plan to add a flexible arrival option in coming versions. Until then, you can click on the flight result and further customize it on our flight supplier's site.</p>
+			<p>If you think we've overlooked a good option or made a mistake, drop us a note through the feedback tab. Thanks for helping us improve Friendography!</p>
+	      </div>
+	    </div>
+	  </div>	  
 	</div>
 </section>
