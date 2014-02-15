@@ -91,7 +91,12 @@ class SearchController < ApplicationController
     session[:departDate] = nil
     session[:returnDate] = nil
     session[:adults] = nil
-    redirect_to '/beta'
+    
+    @defaultDepart = DateTime.now.next_month + 1.month
+    @defaultReturn = @defaultDepart + 1.week
+    @defaultAdults = 1
+    
+    render :action => "search", :status => 200
   end
   
   def search_flights
