@@ -85,11 +85,12 @@ class SearchController < ApplicationController
   end
   
   def logout
+    cookies["fbsr_"+FB_APP_ID] = nil
     session[:access_token] = nil
     session[:departDate] = nil
     session[:returnDate] = nil
     session[:adults] = nil
-    redirect_to '/search'
+    redirect_to '/search/search'
   end
   
   def search_flights
