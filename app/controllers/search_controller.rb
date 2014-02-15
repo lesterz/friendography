@@ -24,6 +24,7 @@ class SearchController < ApplicationController
       if (cookies["fbsr_"+FB_APP_ID].nil?)
         logger.info("Current User Not using Facebook")
         cookies["use_fb"] = false
+        return nil
       else        
         if (!session[:access_token].nil?)
           graph = Koala::Facebook::API.new(session[:access_token])
@@ -90,7 +91,7 @@ class SearchController < ApplicationController
     session[:departDate] = nil
     session[:returnDate] = nil
     session[:adults] = nil
-    redirect_to '/search/search'
+    redirect_to '/beta'
   end
   
   def search_flights
