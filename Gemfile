@@ -20,7 +20,7 @@ group :assets do
   gem 'uglifier', '>= 1.3.0'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '3.1.0'
 gem 'jquery-ui-rails'
 gem 'koala'
 gem 'geocoder'

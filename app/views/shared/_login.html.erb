@@ -6,29 +6,37 @@
 		<% else %>
 			<%= titleText = "We never share your personal information" -%>
 		<% end %>
-	</div>
+	</div>	
 	<div id="fbLoginBox" data-toggle="tooltip" data-placement="top" title="<%= titleText %>">
 		<div class="fblogin">
 		  <div class="fb-login-button" size="medium" autologoutlink="true" scope="friends_location, friends_hometown, user_location, user_hometown">
 		  </div>
 		</div>
 	</div>
-	<script>$('#fbLoginBox').tooltip()</script>
+	<script>$('#fbLoginBox').tooltip();</script>
 	<script>
-	  window.fbAsyncInit = function() {
-	    // init the FB JS SDK
-	    FB.init({
-	      appId      : <%= FB_APP_ID %>,                        // App ID from the app dashboard
-	      channelUrl : '//localhost:3000/channel.html', 		// Channel file for x-domain comms
-	      status     : true,                                 // Check Facebook Login status
-	      xfbml      : true,                                  // Look for social plugins on the page
-	      cookie	 : true
-	    });
-	
+		  window.fbAsyncInit = function() {
+			// init the FB JS SDK
+			FB.init({
+			  appId      : '<%= FB_APP_ID %>',						// App ID from the app dashboard
+			  channelUrl : '<%= CHANNEL_URL %>', 					// Channel file for x-domain comms
+			  status     : true,									// Check Facebook Login status
+			  xfbml      : true,									// Look for social plugins on the page
+			  cookie	 : true
+			});
+			
+			FB.getLoginStatus(function(response) {
+		        if (response.status != 'connected') {
+		            FB.Event.subscribe('auth.login', function(response) {
+		                window.location = '<%= escape_javascript search_path %>';
+		            });
+		        }
+		    });
+		
 		    FB.Event.subscribe('auth.authResponseChange', function(response) { 
 		    if (response.status === 'connected') {
 		    	// renderSocializedMap();	
-		    	searchLoggedIn();     		          			      
+		    	searchLoggedIn();  		          			      
 		    } else if (response.status === 'not_authorized') {
 		      FB.login();
 		    } else {
@@ -46,7 +54,7 @@
 		  	window.location = '/logout'
 		  	console.log('auth.logout event, logging out');
 		  });
-	  };
+		};
 	
 	  	// Load the SDK Asynchronously
 		(function(d){
@@ -58,13 +66,10 @@
 		 }(document));
 		
 		$(function() {
-		  $(".fb-login-button").click(function() {
+		  $(".fblogin").click(function() {
 		    FB.login(function() {
 		      if (response.authResponse) {
 		        console.log("Welcome! Fetching your information...");
-		        $.cookie("user_id", response.authResponse.userID);
-		        $.cookie("access_token", response.authResponse.accessToken);
-		        window.location = "#{oauth_facebook_callback_url}";
 		      } else {
 		        console.log("User cancelled login or did not fully authorize.");
 		      }
@@ -72,12 +77,12 @@
 		  });
 		});	
 		
-    	function searchLoggedIn() {
-    		parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center"><h2 class="heading">Find your friends.</h2> <div class="form-search"> <%= escape_javascript(render partial: "shared/search_fields") %></div></div>';
-    	}
-    	
-    	function searchLoggedOut() {
-    		parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center" style="top: 20px"><h2 class="heading">Log into Facebook to find your friends.</h2</div> ';
-    	}    		
-	</script>	
+		function searchLoggedIn() {
+			parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center"><h2 class="heading">Find your friends.</h2> <div class="form-search"> <%= escape_javascript(render partial: "shared/search_fields") %></div></div>';
+		}
+		
+		function searchLoggedOut() {
+			parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center" style="top: 20px"><h2 class="heading">Log into Facebook to find your friends.</h2</div> ';
+		}    		
+	</script>		
 </section>

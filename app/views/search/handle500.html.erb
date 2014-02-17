@@ -26,15 +26,6 @@
 	<p><%= flash[:notice] %></p>
     <div class="container" style="max-width: 50%" align="center">
       <div class="header" style="margin: 25px;">
-        <ul class="nav navbar-nav pull-right">
-          <li>
-          	<div class="fblogin">
-				<fb:login-button show-faces="false" autologoutlink="true" width="200" max-rows="1" 
-				scope="friends_location, friends_hometown, user_location, user_hometown">
-				</fb:login-button>
-			</div> 
-          </li>
-        </ul>
         <h3 class="text-muted" style="display: inline">Friendography embarrassment page :\</h3>    	       
       </div>
 
@@ -52,47 +43,6 @@
       </div>
 
     </div> <!-- /container -->
-    
-    
-    <div id="fb-root"></div>
-	<script>
-	  window.fbAsyncInit = function() {
-	    // init the FB JS SDK
-	    FB.init({
-	      appId      : <%= FB_APP_ID %>,                        // App ID from the app dashboard
-	      channelUrl : '//localhost:3000/channel.html', 		// Channel file for x-domain comms
-	      status     : true,                                 // Check Facebook Login status
-	      xfbml      : true,                                  // Look for social plugins on the page
-	      cookie	 : true
-	    });
-	
-	    // Additional initialization code such as adding Event Listeners goes here
-	  };
-	
-	  // Load the SDK Asynchronously
-	(function(d){
-	   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-	   if (d.getElementById(id)) {return;}
-	   js = d.createElement('script'); js.id = id; js.async = true;
-	   js.src = "//connect.facebook.net/en_US/all.js";
-	   ref.parentNode.insertBefore(js, ref);
-	 }(document));
-	
-	$(function() {
-	  $(".fb-login-button").click(function() {
-	    FB.login(function() {
-	      if (response.authResponse) {
-	        console.log("Welcome! Fetching your information...");
-	        $.cookie("user_id", response.authResponse.userID);
-	        $.cookie("access_token", response.authResponse.accessToken);
-	        window.location = "#{oauth_facebook_callback_url}";
-	      } else {
-	        console.log("User cancelled login or did not fully authorize.");
-	      }
-	    }, {scope: 'user_location, user_hometown, friends_location, friends_hometown'});
-	  });
-	});
-	</script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

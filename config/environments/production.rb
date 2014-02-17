@@ -76,4 +76,7 @@ Fbmaps::Application.configure do
   # Facebook keys
   FB_APP_ID = "xxxx"
   FB_APP_SECRET = "xxxx"
+  
+  CHANNEL_URL = "http://friendography.com/channel.html"
+  
 end

@@ -43,4 +43,7 @@ Fbmaps::Application.configure do
   # Facebook keys
   FB_APP_ID = "xxxx"
   FB_APP_SECRET = "xxxx"
+  
+  CHANNEL_URL = "http://localhost:3000/channel.html"
+  
 end

@@ -32,6 +32,9 @@ class SearchController < ApplicationController
         else
           oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_APP_SECRET)
           fbCookies ||= oauth.get_user_info_from_cookies(cookies)
+          if fbCookies.nil?
+            return nil
+          end
           extended_token = oauth.exchange_access_token_info(fbCookies['access_token'])
           graph = Koala::Facebook::API.new(extended_token['access_token'])
           session[:access_token] = extended_token['access_token']
@@ -64,22 +67,23 @@ class SearchController < ApplicationController
     end
     
     # A specific auth exception like accessToken expired or auth denied.
-    rescue Koala::Facebook::OAuthTokenRequestError
-      logger.info("Caught OAuthException condition from oauth attempt")
+    rescue Koala::Facebook::OAuthTokenRequestError => e
+      logger.error("Caught OAuthException condition from oauth attempt: " + e.to_s)
       logger.info("Cookies: " + cookies.inspect)
       flash[:notice] = "Error with OAuth"
       redirect_to action: 'handle500'  # Redirect to a "safer" 500 error page.
       
-    rescue Koala::Facebook::OAuthSignatureError
-      logger.info("Caught OauthSignatureError from get_user_from_cookie...")
+    rescue Koala::Facebook::OAuthSignatureError => e
+      logger.error("Caught OauthSignatureError: " + e.to_s)
       logger.info("Cookies: " + cookies.inspect)
       flash[:notice] = "Error with OAuth Signature Key"
       redirect_to action: 'handle500' # Redirect to a "safer" 500 error page.
       
     # User not logged in OR something technical went wrong during auth OR Facebook blew up during some massive operation!
-    rescue nil 
-      logger.info("Caught nil condition from oauth attempt")
-      flash[:notice] = "Error getting Facebook Data"
+    rescue => e
+      logger.error("Caught a StandardError: " + e.to_s)
+      flash[:notice] = "Error condition fetching data"
+      request.env["HTTP_REFERER"] = "/search" unless request.nil? or request.env.nil?
       redirect_to :back
     end
     
