@@ -116,3 +116,19 @@ body {
     margin-top: -50px;
 }
 }
+
+.row:after {
+  display: inline !important;
+}
+
+#resultsDiv:before {
+  display: inline !important;
+}
+
+#resultsDiv:after {
+  display: inline !important;
+}
+
+.row:before {
+  display: inline !important;
+}

@@ -15,6 +15,7 @@
 	</div>
 	<script>$('#fbLoginBox').tooltip();</script>
 	<script>
+<<<<<<< HEAD
 		  window.fbAsyncInit = function() {
 			// init the FB JS SDK
 			FB.init({
@@ -33,6 +34,18 @@
 		        }
 		    });
 		
+=======
+	  window.fbAsyncInit = function() {
+	    // init the FB JS SDK
+	    FB.init({
+	      appId      : '<%= FB_APP_ID %>',                        // App ID from the app dashboard
+	      channelUrl : '<%= CHANNEL_URL %>', 		// Channel file for x-domain comms
+	      status     : true,                                 // Check Facebook Login status
+	      xfbml      : true,                                  // Look for social plugins on the page
+	      cookie	 : true
+	    });
+	
+>>>>>>> master
 		    FB.Event.subscribe('auth.authResponseChange', function(response) { 
 		    if (response.status === 'connected') {
 		    	// renderSocializedMap();	

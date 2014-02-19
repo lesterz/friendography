@@ -1,6 +1,6 @@
 <section class="mapSection">
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.9/src/markerclusterer.js"></script>
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.1.2/src/markerclusterer.js"></script>
 	<script type="text/javascript">
 		// Enable the visual refresh
 		google.maps.visualRefresh = true;
@@ -11,7 +11,7 @@
 		
 		function initialize() {				
 			var mapOptions = {
-			    zoom: 2,
+			    zoom: 3,
 			    center: new google.maps.LatLng(12.50000, -39.50000), // Default center to middle 
 			    mapTypeId: google.maps.MapTypeId.ROADMAP,
 			    scrollwheel: true
@@ -147,6 +147,7 @@
 		}
 		
 		function bindClusterInfoWindow(markerClusterer, map, infoWindow, userAirport) {
+						
 		    google.maps.event.addListener(markerClusterer, 'click', function (mCluster) {  
 		    	infoWindow.setPosition(mCluster.getCenter()); 
 		    	
@@ -186,7 +187,7 @@
 			    }
 			    
 		    	clusterContent = "<div id='clusterInfoWindowContent' style='max-width: 220px'>";		    			    			    	
-		    	if (map.getZoom() > 3 && max.val != "None" && max.val != userAirport) {
+		    	if (map.getZoom() > 1 && max.val != "None" && max.val != userAirport) {
 		    		clusterContent += "<div id='seeFlightsBox' style='margin-bottom: 2px; padding-right: 2px; border-style: solid; border-width: 1px; border-color: #E588D4;'><a href='/search_flights?adults=1&from="+userAirport+"&where_to="+max.val+"' data-remote='true', style='font-weight: bold; text-decoration: none; white-space: nowrap'><img src='/images/flights_button_20x20.jpg'/>"+destLine+"</a></div>";	
 		    	}
 		    	clusterContent += "<div id='innerClusterInfoWindowContent' style='max-height: 180px'><table>";
@@ -199,6 +200,22 @@
 		    	infoWindow.setContent(clusterContent);
 			    infoWindow.open(map);
 			});
+			
+			google.maps.event.addListener(markerClusterer, "clusteringend", function(mClusterer) {
+				// console.log("FinishedClustering");  This event is triggered everytime the map is moved our zoomed.
+			});
+			
+			google.maps.event.addListener(markerClusterer, 'mouseover', function() {
+	    		//infoWindow = new google.maps.InfoWindow();
+	    		//infoWindow.setPosition(markerClusterer.getMarkers()[0].position);
+	    		//clusterContent = "YOu have friends here, click to see..";
+	    		//infoWindow.setContent(clusterContent);
+		    	//infoWindow.open(map);
+		    });
+		    
+		    google.maps.event.addListener(markerClusterer, 'mouseout', function() {
+			    //infoWindow.close()
+		    });
 		}
 		
 		function clearMap(map) {
@@ -207,10 +224,6 @@
 		  	}
 		  	markers = [];
 		  	markerClusterer.clearMarkers();
-		}
-
-		function shopFlights() {
-			console.log("Testing ...")
 		}
 
 	</script>	
