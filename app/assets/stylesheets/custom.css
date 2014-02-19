@@ -45,11 +45,6 @@ html, body {
 	font-size: 14px;
 }
 
-/* Hack fix until Twitter patches https://github.com/twbs/bootstrap/issues/9855 */
-.modal-open, .modal-open .navbar-fixed-top {
-  margin-right: 0 !important;
-}
-
 .ui-datepicker { 
 	font-size: 7pt !important; 
 }

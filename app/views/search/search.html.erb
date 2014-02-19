@@ -97,45 +97,31 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
-
-    <% if false %> <!-- set to true for debugging -->			
-      <div class="friends_list">
-       	 <p>
-		  	<table>
-		  	  <% @friends.each do |friend| %>
-		  	  <tr>
-		  	    <%= friend.name %> lives in 
-		  	    <% if friend.location %>
-		  	      <%= friend.location['name'] %>
-		  	      <% else %>
-		  	      An Undisclosed Location
-		  	    <% end %>	    
-		  	    <% if friend.location %>
-		  	      <%= friend.latitude %> & <%= friend.longitude %>
-		  	    <% end %>
-		  	  </tr><br/>
-		  	  <% end %>
-		  	</table>
-       	 </p>
-      </div>
-    <% end %>		
-
-	<div class="resultsDiv" style="display: inline">
-		<div id="map-canvas">
-	      <%= render partial: "shared/map" %>
-	    </div>
-	    
-	    <div id="params-canvas" style="position: relative; top: -550px; float: right; width: 25%; padding: 0px 5px 0px 5px;">
-	    	<%= render partial: "shared/params" %>	
-	    </div>
-	    <div id="flights_canvas" style="position: relative; top: -430px; right: -25%; float: right; width: 25%; padding: 0px 5px 0px 5px;">
-	    	<%= render partial: "shared/flights" %>
-	    </div>	    
-	</div> 
+	</div>		
 	
-	<div id="footer">
-		<%= render partial: "shared/footer" %>
+	<div id="resultsDiv" class="container" style="display: inline; width: 70%; height: 100%">
+		<div class="row">
+			<div class="span9" id="map-canvas">
+		      <%= render partial: "shared/map" %>
+		    </div>
+		    
+		    <div class="span3">
+			    <div id="params-canvas" style="position: relative; top: -550px; float: right; width: 25%; padding: 0px 20px 0px 5px;">
+			    	<%= render partial: "shared/params" %>	
+			    </div>
+			    <div id="flights_canvas" style="position: relative; top: -430px; right: -25%; float: right; width: 25%; padding: 0px 20px 0px 5px;">
+			    	<%= render partial: "shared/flights" %>
+			    </div>
+			</div>	
+		</div>    
+	</div>
+	<div id="info"></div>
+	<div class="container" style="height: 10%">
+		<div class="row">
+			<div class="span12" id="footer">
+				<%= render partial: "shared/footer" %>
+			</div>
+		</div>
 	</div>
     
     <% if Rails.env.production? %> 
@@ -143,5 +129,4 @@
     <% end %>      
         
   </body>
-
 </html>

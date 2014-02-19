@@ -3,21 +3,22 @@
 	<div id="LoadingDiv" align="center">
 		<img src="/images/AjaxThrober.gif" alt=""/>
 	</div>
-	<div class="flightResults">
+	<div class="flightResults" style="position: relative;">
 		
 	</div>	        
 </section>
 
 <script>
 	$(document).ajaxStart(function() {
-		$('.flightResults').hide();
-		var ldiv = document.getElementById('LoadingDiv');
-		ldiv.style.display='block';
+		$('.flightResults').css("top", "35px");
+		var content = $('.flightResults').innerHTML;
+		$('#LoadingDiv').css("display", "block");
+		$('#LoadingDiv').append(content).slideDown("slow");
 	});	
 	
 	$(document).ajaxComplete(function() {
 		var ldiv = document.getElementById('LoadingDiv');
 		ldiv.style.display='none';
-		$('.flightResults').show();
+		$('.flightResults').css("top", "-5px");
 	});		
 </script>
