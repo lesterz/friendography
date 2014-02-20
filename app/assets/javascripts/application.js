@@ -15,4 +15,5 @@
 //= require jquery.ui.all
 //= require bootstrap
 //= require oms.min
+//= require markerclusterer
 //= require_tree .

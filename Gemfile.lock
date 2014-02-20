@@ -48,7 +48,7 @@ GEM
     hike (1.2.3)
     i18n (0.6.5)
     iso8601 (0.4.1)
-    jquery-rails (3.0.4)
+    jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.1.0)
@@ -127,7 +127,7 @@ DEPENDENCIES
   aws-sdk
   coffee-rails (~> 4.0.0)
   geocoder
-  jquery-rails
+  jquery-rails (= 3.1.0)
   jquery-ui-rails
   koala
   nokogiri (~> 1.6.0.rc1)
