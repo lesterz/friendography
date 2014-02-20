@@ -41,6 +41,10 @@
       <div class="footer">
         <p>Friendography 2014, all rights reserved</p>
       </div>
+      
+      <% if Rails.env.production? %> 
+    	<%= render 'layouts/ga' %>
+      <% end %>
 
     </div> <!-- /container -->
     <!-- Bootstrap core JavaScript

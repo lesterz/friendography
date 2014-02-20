@@ -13,9 +13,10 @@
 		  </div>
 		</div>
 	</div>
-	<script>$('#fbLoginBox').tooltip();</script>
 	<script>
-<<<<<<< HEAD
+		$('#fbLoginBox').tooltip();		
+	</script>
+	<script>
 		  window.fbAsyncInit = function() {
 			// init the FB JS SDK
 			FB.init({
@@ -29,23 +30,12 @@
 			FB.getLoginStatus(function(response) {
 		        if (response.status != 'connected') {
 		            FB.Event.subscribe('auth.login', function(response) {
+		            	window.parent.$('#mapThrobberPanel').css("display", "block");
 		                window.location = '<%= escape_javascript search_path %>';
 		            });
 		        }
 		    });
-		
-=======
-	  window.fbAsyncInit = function() {
-	    // init the FB JS SDK
-	    FB.init({
-	      appId      : '<%= FB_APP_ID %>',                        // App ID from the app dashboard
-	      channelUrl : '<%= CHANNEL_URL %>', 		// Channel file for x-domain comms
-	      status     : true,                                 // Check Facebook Login status
-	      xfbml      : true,                                  // Look for social plugins on the page
-	      cookie	 : true
-	    });
-	
->>>>>>> master
+
 		    FB.Event.subscribe('auth.authResponseChange', function(response) { 
 		    if (response.status === 'connected') {
 		    	// renderSocializedMap();	
@@ -57,8 +47,6 @@
 		      // so we call login() and clear the map
 		      clearMap(null);		      
 		      <% cookies["fbsr_"+FB_APP_ID] = nil %>
-		      <% cookies["use_fb"] = false %>
-		      searchLoggedOut();
 		      FB.login();
 		    }
 		  });
@@ -90,12 +78,8 @@
 		  });
 		});	
 		
-		function searchLoggedIn() {
-			parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center"><h2 class="heading">Find your friends.</h2> <div class="form-search"> <%= escape_javascript(render partial: "shared/search_fields") %></div></div>';
-		}
-		
-		function searchLoggedOut() {
-			parent.document.getElementById("show-search").innerHTML = '<div class="col-lg-6" align="center" style="top: 20px"><h2 class="heading">Log into Facebook to find your friends.</h2</div> ';
-		}    		
+		$(document).ready(function() {
+			$('#mapThrobberPanel').css("display", "none");
+		})    		
 	</script>		
 </section>

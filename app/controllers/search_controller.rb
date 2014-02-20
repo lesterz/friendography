@@ -1,5 +1,3 @@
-require 'date'
-
 class SearchController < ApplicationController
 
   def initialize
@@ -85,8 +83,7 @@ class SearchController < ApplicationController
       flash[:notice] = "Error condition fetching data"
       request.env["HTTP_REFERER"] = "/search" unless request.nil? or request.env.nil?
       redirect_to :back
-    end
-    
+    end   
   end
   
   def logout
