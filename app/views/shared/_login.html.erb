@@ -38,8 +38,7 @@
 
 		    FB.Event.subscribe('auth.authResponseChange', function(response) { 
 		    if (response.status === 'connected') {
-		    	// renderSocializedMap();	
-		    	searchLoggedIn();  		          			      
+		    	// renderSocializedMap();	 		          			      
 		    } else if (response.status === 'not_authorized') {
 		      FB.login();
 		    } else {
