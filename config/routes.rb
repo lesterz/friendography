@@ -8,6 +8,7 @@ Fbmaps::Application.routes.draw do
   match 'search_flights', to: 'search#search_flights', via: [:get]
   match 'set_params', to: 'search#set_params', via: [:get]
   match 'feedback', to: 'search#feedback', via: [:get]
+  match 'confirm_usage', to: 'search#confirm_usage', via: [:get]
   match 'logout', to: 'search#logout', via: [:get]
   match 'handle500', to: 'search#handle500', via: [:get]
   

@@ -101,7 +101,6 @@ class SearchController < ApplicationController
   end
   
   def search_flights
-
     if session[:departDate] || session[:returnDate] || session[:adults]
       userParams = Hash.new
       if session[:departDate]
@@ -184,6 +183,18 @@ class SearchController < ApplicationController
       format.html
       format.js
     end       
+  end
+  
+  def confirm_usage
+    if params[:fb_id]
+      cookies["confirmed_usage"+params[:fb_id]] = {
+        value: true,
+        expires: 1.year.from_now
+      }
+    end
+    respond_to do | format |
+      format.js
+    end
   end
   
   def feedback

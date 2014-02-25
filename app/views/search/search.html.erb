@@ -48,6 +48,7 @@
 	      	<ul class="nav nav-tabs">
 			  <li class="active"><a href="#aboutData" data-toggle="tab">About</a></li>
 			  <li><a href="#faqData" data-toggle="tab">FAQ</a></li>
+			  <li><a href="#impressumData" data-toggle="tab">Imprint</a></li>
 			</ul>
 			<div class="tab-content">
 		      <div class="tab-pane active" id="aboutData">
@@ -55,6 +56,9 @@
 		      </div>
 		      <div class="tab-pane" id="faqData">
 		      	<%= render partial: "shared/faq" %>
+		      </div>
+		      <div class="tab-pane" id="impressumData">
+		      	<%= render partial: "shared/impressum" %>
 		      </div>
 		    </div> 	      		        	         
 	      </div>
@@ -83,10 +87,22 @@
 	    </div>
 	  </div>
 	</div>		
-	
+
 	<div id="resultsDiv" class="container" style="display: inline; width: 70%; height: 100%">
 		<div class="row">
-			<div class="span9" id="mapThrobberPanel" align="center" style="position: absolute; top: 40%; left: 30%; display: block; z-index: 999; background-color: rgba(0,0,0,0.6); border-radius: 15px; -webkit-border-radius: 15px; padding: 50px">
+			<% if(@currentUser && !cookies["confirmed_usage"+@currentUser.id.to_s]) %>
+				<div id="usageNotice" class="alert alert-info fade in" style="position: absolute; top: 20%; left: 30%; z-index: 9999; width: 25%;">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<h4>Ok, What Now?</h4>
+					<p>After logging in, click on the bubbles to see friends and flights.  You can even zoom in to get a better view of who lives where.  Flights you select will appear on the right.</p>	
+					<hr/>
+					<div align="center">
+						<img src="/images/fgyscreen.png" style="width: 230px; height: 185px; margin-bottom: 20px; box-shadow: 2px 2px 5px #666; -moz-box-shadow: 2px 2px 5px #666; -webkit-box-shadow: 2px 2px 5px #666" align="center"/>
+					</div>	
+					<button id="usageCloseBtn" type="button" class="btn btn-info" data-dismiss="alert" aria-hidden="true" data-loading-text="Storing..." style="position: relative; left: 40%;">Got It!</button>		
+				</div>
+			<% end %>
+			<div class="span9" id="mapThrobberPanel" align="center" style="position: absolute; top: 40%; left: 30%; z-index: 999; display: block; background-color: rgba(0,0,0,0.6); border-radius: 15px; -webkit-border-radius: 15px; padding: 50px">
 				<img src="/images/MapAjaxThrober.gif" alt=""/>	
 			</div>
 			<div class="span9" id="map-canvas">
@@ -118,3 +134,21 @@
         
   </body>
 </html>
+
+<script>
+	$('#usageNotice').bind('closed.bs.alert', function () {
+	  console.log("Closed usage box...");	  
+	});
+	
+	$('#usageCloseBtn').click(function() {
+		var fb_id = <%= @currentUser.nil? ? "00000" : @currentUser.id %>
+		var btn = $(this)
+	    btn.button('loading')
+	    $.ajax({
+ 	      		type: 'GET',
+             	url: "/confirm_usage?fb_id="+fb_id
+          	}).always(function () {
+	      		btn.button('reset')
+	    });	
+	});
+</script>
