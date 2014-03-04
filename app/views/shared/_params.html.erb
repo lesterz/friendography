@@ -5,7 +5,7 @@
 		</button>
 		<div id="paramsDisplayText">&nbsp; <%=@defaultAdults%> Adult(s), <%= @defaultDepart.strftime("%B %-d") %> - <%= @defaultReturn.strftime("%B %-d") %></div>
 	</div>	
-	<div id="customizeParams" style="display: block;">
+	<div id="customizeParams" style="display: none;">
 		<%= form_tag({controller: "search", action: "set_params"}, method: "get", remote: true, class: "flight_params_form") do %>	
 			<div id="dates" style="display: inline">
 				<div id="departDate" style="float: left; display: block; padding-right: 15%; padding-bottom: 2%">
@@ -56,10 +56,10 @@
 	$("#customize").click(function() {	
 	  $('#customize').tooltip('toggle')			
 	  $( "#customizeParams" ).slideToggle( "fast" );
-	  if ($("#flights_canvas").css( "top" ) == "-510px" ) {
-		$("#flights_canvas").css( "top", "-430px" );
+	  if ($("#flights_canvas").css( "top" ) == "-430px" ) {
+		$("#flights_canvas").css( "top", "-510px" );
 	  } else {
-		$("#flights_canvas").css("top", "-510px");
+		$("#flights_canvas").css("top", "-430px");
 	  }
 	});		
 </script>
