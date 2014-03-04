@@ -1,7 +1,30 @@
 <section id="footerData">	
-	<div id="rights" style="display: inline; padding-right: 30px; font-size: 10px;">
+	<div id="rights">
 		2014 Friendography.com. All rights reserved.
 	</div>
 	<div class="fb-like" data-href="https://www.facebook.com/friendography/" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
-	<div id="instructions" style="display: inline; padding-left: 20px;"></div>
+	<div id="email_drop">
+	  <div><input type="text" name="email" id="email_input" placeholder="Keep in touch! "/></div>
+	  <div><button type="button" id="email_submit" class="btn btn-xs btn-primary" data-loading-text="Submitting...">Submit Email</button></div>
+	</div>
 </section>
+
+<script>
+		$('#email_submit').click(function() {
+			var email = $('#email_input').val();
+			var varData = 'email=' + email;
+			var btn = $(this)
+			btn.button('loading');
+			$.ajax({
+				type: 'GET',
+				url: '/email',
+				data: varData,
+		      	global: false,
+		      	success: function() {
+		      	}
+			}).always(function() {
+				btn.button('reset');
+			});	
+			return false;			
+		});	
+</script>

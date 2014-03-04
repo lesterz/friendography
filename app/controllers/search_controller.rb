@@ -21,12 +21,10 @@ class SearchController < ApplicationController
      
       if (cookies["fbsr_"+FB_APP_ID].nil?)
         logger.info("Current User Not using Facebook")
-        cookies["use_fb"] = false
         return nil
       else        
         if (!session[:access_token].nil?)
           graph = Koala::Facebook::API.new(session[:access_token])
-          cookies["use_fb"] = true
         else
           oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_APP_SECRET)
           fbCookies ||= oauth.get_user_info_from_cookies(cookies)
@@ -36,8 +34,7 @@ class SearchController < ApplicationController
           extended_token = oauth.exchange_access_token_info(fbCookies['access_token'])
           graph = Koala::Facebook::API.new(extended_token['access_token'])
           session[:access_token] = extended_token['access_token']
-          session[:token_expiry] = DateTime.now + extended_token['expires'].to_i.seconds
-          cookies["use_fb"] = true      
+          session[:token_expiry] = DateTime.now + extended_token['expires'].to_i.seconds    
         end
         
         @me = graph.get_object("me", :fields => "id,name,link,picture.type(square),location,hometown")
@@ -61,7 +58,7 @@ class SearchController < ApplicationController
             friend.longitude = f_location['location']['longitude']
           end
           @friends << friend       
-        end
+        end        
     end
     
     # A specific auth exception like accessToken expired or auth denied.
@@ -82,8 +79,28 @@ class SearchController < ApplicationController
       logger.error("Caught a StandardError: " + e.to_s)
       flash[:notice] = "Error condition fetching data"
       request.env["HTTP_REFERER"] = "/search" unless request.nil? or request.env.nil?
-      redirect_to :back
+      redirect_to action: 'handle500'
     end   
+  end
+  
+  def friend_checkins
+    @friendCheckins = Hash.new()
+    graph = Koala::Facebook::API.new(session[:access_token])
+    checkins = graph.fql_query("SELECT target_id, author_uid, message, timestamp FROM checkin WHERE author_uid IN (SELECT uid1 FROM friend WHERE uid2 = me()) AND timestamp > 1362096000")
+    checkins.take(50).each do |checkin|
+      ch_details = graph.fql_query("SELECT name, page_id, location FROM page WHERE page_id = " + checkin['target_id'].to_s)
+      #logger.info("Checkin Details: " + ch_details.inspect)
+      if (!ch_details.blank? && ch_details[0]['location'])
+        #logger.info("Friend Checkin: " + ch_details[0]['name'])
+        @friendCheckins[ch_details[0]['location']['city']] = checkin['author_uid']
+      end
+    end
+    
+    logger.info("FQL Query for Friend Chechins: " + @friendCheckins.inspect)
+    respond_to do | format |
+      format.html
+      format.js
+    end
   end
   
   def logout
@@ -220,6 +237,27 @@ class SearchController < ApplicationController
     respond_to do | format |
       format.html
       format.js
+    end
+  end
+  
+  def email
+    @email = params[:email] if params[:email]
+    
+    #send email address to friendography
+    begin
+      ses = AWS::SimpleEmailService.new
+      ses.send_email(:subject => 'Email submit via friendography.com friend results page',
+                   :from => 'friendography@gmail.com',
+                   :to => 'friendography@gmail.com',
+                   :body_text => @email.to_s)
+     rescue nil
+       logger.info("Something went wrong with Amazon Simple Email")       
+     end
+    
+    respond_to do | format |
+      format.js {
+         render :text => "FINISHED SUBMITTING EMAIL AJAX REQUEST"
+       }
     end
   end
   
