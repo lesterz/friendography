@@ -70,6 +70,7 @@ Fbmaps::Application.configure do
   
   # Travel API URI and Creds
   TRAVEL_API_URI = "url.com/service"
+  TRAVEL_SMARTFILL_URI = "url.com/service"
   USERNAME = "xxxx"
   PASSWORD = "xxxx"
   

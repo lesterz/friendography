@@ -118,6 +118,15 @@ class SearchController < ApplicationController
   end
   
   def search_flights
+    if params[:custom_search]
+      logger.info("Custom Search: " + params[:orig] + " to " + params[:dest])
+      params[:orig] = params[:orig].split(")").collect{|x| x.split("(")[1]}[0]
+      params[:dest] = params[:dest].split(")").collect{|x| x.split("(")[1]}[0]
+      
+      logger.info("Converts to: " + params[:orig][0].to_s + " and " + params[:dest][0].to_s)
+      
+    end
+    
     if session[:departDate] || session[:returnDate] || session[:adults]
       userParams = Hash.new
       if session[:departDate]
@@ -144,6 +153,26 @@ class SearchController < ApplicationController
       format.html
       format.js
     end
+  end
+  
+  def smartfill
+    uri = URI(TRAVEL_SMARTFILL_URI)
+    url_params = { :pos => 'ORB', :locale => 'en_US', :productType => 'AIR', :locationKeyword => params[:locationKeyword] }
+    uri.query = URI.encode_www_form(url_params)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request.basic_auth USERNAME, PASSWORD
+    request.content_type = 'UTF-8'
+    response = http.request(request)
+    body = JSON.parse(response.body)
+    
+    logger.info("Finished smartfill: " + body['response']['docs'].inspect)
+       
+    respond_to do | format |
+      format.json { render :json => body['response']['docs'] }
+    end 
   end
   
   def set_params

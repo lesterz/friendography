@@ -3,9 +3,8 @@
 	<div id="LoadingDiv" align="center">
 		<img src="/images/AjaxThrober.gif" alt=""/>
 	</div>
-	<div class="flightResults" style="position: relative;">
-		
-	</div>	        
+	<div class="flightResults" style="position: relative;"></div>
+	       
 </section>
 
 <script>
@@ -20,5 +19,55 @@
 		var ldiv = document.getElementById('LoadingDiv');
 		ldiv.style.display='none';
 		$('.flightResults').css("top", "-5px");
-	});		
+	});
+	
+	$(function() {
+		$( "#orig" ).autocomplete({
+	  		source: function (request, response) {
+	  			$.ajax({
+	  				type: 'GET',
+	 				url: "/smartfill",
+	 				data: { locationKeyword: request.term },
+	 				dataType: "json",
+	 				global: false,
+	 				success:  function (data) {
+	 					response($.map(data, function(item) {
+	 					console.log(item['loc.smartFill_en_US_AIR'])
+	            			return {
+	                			label: item['loc.smartFill_en_US_AIR'],
+	                			id: item['loc.id']
+	                        };
+	             		}));
+				 	}
+	         	});     	      	
+	      	}, 
+	      	autoFocus: true,                      
+	      	minLength: 3,
+	      	delay: 100
+	    });
+	    
+	    $( "#dest" ).autocomplete({
+	  		source: function (request, response) {
+	  			$.ajax({
+	  				type: 'GET',
+	 				url: "/smartfill",
+	 				data: { locationKeyword: request.term },
+	 				dataType: "json",
+	 				global: false,
+	 				success:  function (data) {
+	 					response($.map(data, function(item) {
+	 					console.log(item['loc.smartFill_en_US_AIR'])
+	            			return {
+	                			label: item['loc.smartFill_en_US_AIR'],
+	                			id: item['loc.id']
+	                        };
+	             		}));
+				 	}
+	         	});     	      	
+	      	}, 
+	      	autoFocus: true,                      
+	      	minLength: 3,
+	      	delay: 100
+	    });
+	});
 </script>

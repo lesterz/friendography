@@ -15,6 +15,24 @@
  	height: expression(document.body.scrollHeight &gt; document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
 }*/
 
+.custSearchWidget {
+	font-size: 12px;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-size: 12px !important;
+    font-weight: normal !important;
+}
+
+.ui-autocomplete-loading {
+  background: white url('/images/miniThrobber16x16.gif') right center no-repeat;
+}
+
+ul.ui-autocomplete.ui-menu {
+  width: 200px;
+  font-size: 10px;
+}
+
 button:hover {
 	text-decoration:none;
 }

@@ -7,8 +7,8 @@ module SearchHelper
     
     def params(params)
       @params[:pointOfSale] = 'ORB'
-      @params[:origin] = params[:from]
-      @params[:destination] = params[:where_to]
+      @params[:origin] = params[:orig]
+      @params[:destination] = params[:dest]
       if params[:adults].blank?
         @params[:adults] = 1
       else

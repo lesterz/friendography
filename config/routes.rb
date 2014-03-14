@@ -7,6 +7,7 @@ Fbmaps::Application.routes.draw do
   match 'search', to: 'search#search', via: [:get]
   match 'f_checkins', to: 'search#friend_checkins', via: [:get]
   match 'search_flights', to: 'search#search_flights', via: [:get]
+  match 'smartfill', to: 'search#smartfill', via: [:get]
   match 'set_params', to: 'search#set_params', via: [:get]
   match 'email', to: 'search#email', via: [:get]
   match 'feedback', to: 'search#feedback', via: [:get]
