@@ -1,32 +1,56 @@
 <section class="searchParams" style="padding: 5px; border-style: solid; border-width: 1px; border-color: #E588D4; font-family: Helvetica;">		
 	<div class="customizeLine">
 		<button id="customize" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Toggle to Customize">
-			Customize Dates 
+			Customize Dates & More 
 		</button>
 		<div id="paramsDisplayText">&nbsp; <%=@defaultAdults%> Adult(s), <%= @defaultDepart.strftime("%B %-d") %> - <%= @defaultReturn.strftime("%B %-d") %></div>
 	</div>	
-	<div id="customizeParams" style="display: none;">
-		<%= form_tag({controller: "search", action: "set_params"}, method: "get", remote: true, class: "flight_params_form") do %>	
-			<div id="dates" style="display: inline">
-				<div id="departDate" style="float: left; display: block; padding-right: 15%; padding-bottom: 2%">
-					<div class="mdY" style="display: inline; font-size: 10px"> <%= label_tag(:depart, "Depart:") %> &nbsp; mm/dd/yyyy</div>
-					<%= text_field(:depart, :depart, :value => @defaultDepart.strftime("%m/%d/%Y"), size: 14, :class => "dateInput") %>
+	<div id="customizeParams" style="display: none">
+		<div id="datesAndPassengers" style="padding-bottom: 2px">
+			<%= form_tag({controller: "search", action: "set_params"}, method: "get", remote: true, class: "flight_params_form") do %>	
+				<div id="dates" style="display: inline">
+					<div id="departDate" style="float: left; display: block; padding-right: 15%; padding-bottom: 2%">
+						<div class="mdY" style="display: inline; font-size: 10px"> <%= label_tag(:depart, "Depart:") %> &nbsp; mm/dd/yyyy</div>
+						<%= text_field(:depart, :depart, :value => @defaultDepart.strftime("%m/%d/%Y"), size: 14, :class => "dateInput") %>
+					</div>
+					<div id="returnDate" style="display: block; padding-bottom: 2%">
+						<div class="mdY" style="display: inline; font-size: 10px"> <%= label_tag(:return, "Return:") %> &nbsp; mm/dd/yyyy</div>
+						<%= text_field(:return, :return, :value => @defaultReturn.strftime("%m/%d/%Y"), size: 14, :class => "dateInput") %>
+					</div>
+				</div>				
+				
+				<div id="passengers" style="display: inline">			
+					<%= label_tag(:adults, "Adults:") %> &nbsp;
+					<%= select_tag(:adults, options_for_select([1, 2, 3, 4], @defaultAdults)) %>
 				</div>
-				<div id="returnDate" style="display: block; padding-bottom: 2%">
-					<div class="mdY" style="display: inline; font-size: 10px"> <%= label_tag(:return, "Return:") %> &nbsp; mm/dd/yyyy</div>
-					<%= text_field(:return, :return, :value => @defaultReturn.strftime("%m/%d/%Y"), size: 14, :class => "dateInput") %>
+				<div id="setButton" style="position: relative; left: -3%; display: inline; float: right">
+					<%= submit_tag("Set", class: "btn btn-default btn-xs") %>	
 				</div>
-			</div>				
-			
-			<div id="passengers" style="display: inline">			
-				<%= label_tag(:adults, "Adults:") %> &nbsp;
-				<%= select_tag(:adults, options_for_select([1, 2, 3, 4], @defaultAdults)) %>
-			</div>
-			<div id="setButton" style="position: relative; left: -6%; display: inline; float: right">
-				<%= submit_tag("Set", class: "btn btn-default btn-xs") %>	
-			</div>
-		<% end %>
-	</div>	       
+			<% end %>
+		</div>
+
+		<div id="customSearch" style="overflow: hidden; padding-top: 5px; border-top: 1px solid #B1B1B1">
+			<div class="customSearchLabel" style="font-size: 12px">Or Pick Your Own Airports</div>
+			<div id="smartFill">
+				<%= form_tag({controller: "search", action: "search_flights"}, method: "get", remote: true) do %>
+					<div id="to_from" style="display: inline">
+						<div class="custSearchWidget" style="float: left; display: block; padding: 0% 10% 2% 0%">
+						  <div class="oairport" style="display: block"><%= label_tag("airports", "From: ")%></div>
+						  <%= text_field_tag("orig", nil, placeholder: "Origin") %>
+						</div>
+						<div class="custSearchWidget" style="display: block; padding: 0% 0% 2% 5%">
+						  <div class="dairport" style="display: block"><%= label_tag("airports", "To: ")%></div>
+						  <%= text_field_tag("dest", nil, placeholder: "Destination") %>
+						</div>
+					</div>					
+					<div class="airportsSubmitBtn" style="position: relative; left: -3%; display: inline; float: right">
+						<%= hidden_field_tag("custom_search", true)%>
+						<%= submit_tag("Search", class: "btn btn-default btn-xs")%>
+					</div>
+				<% end %>
+			</div> 
+		</div>
+	</div>		       
 </section>
 
 <script>
@@ -56,10 +80,69 @@
 	$("#customize").click(function() {	
 	  $('#customize').tooltip('toggle')			
 	  $( "#customizeParams" ).slideToggle( "fast" );
-	  if ($("#flights_canvas").css( "top" ) == "-430px" ) {
+	  if ($("#flights_canvas").css( "top" ) == "-340px" ) {
 		$("#flights_canvas").css( "top", "-510px" );
 	  } else {
-		$("#flights_canvas").css("top", "-430px");
+		$("#flights_canvas").css("top", "-340px");
 	  }
-	});		
+	});	
+	
+	$(function() {
+		$( "#orig" ).autocomplete({
+	  		source: function (request, response) {
+	  			$.ajax({
+	  				type: 'GET',
+	 				url: "/smartfill",
+	 				data: { locationKeyword: request.term },
+	 				dataType: "json",
+	 				global: false,
+	 				success:  function (data) {
+	 					response($.map(data, function(item) {
+	            			return {
+	                			label: item['loc.smartFill_en_US_AIR'],
+	                			id: item['loc.id']
+	                        };
+	             		}));
+				 	}
+	         	});     	      	
+	      	}, 
+	      	autoFocus: true,                      
+	      	minLength: 3,
+	      	delay: 100,
+	      	position: {
+	      		my: "right top",
+	      		at: "right bottom",
+	      		collision: "none"
+	      	}
+	    });
+	    
+	    $( "#dest" ).autocomplete({
+	  		source: function (request, response) {
+	  			$.ajax({
+	  				type: 'GET',
+	 				url: "/smartfill",
+	 				data: { locationKeyword: request.term },
+	 				dataType: "json",
+	 				global: false,
+	 				success:  function (data) {
+	 					response($.map(data, function(item) {
+	            			return {
+	                			label: item['loc.smartFill_en_US_AIR'],
+	                			id: item['loc.id']
+	                        };
+	             		}));
+				 	}
+	         	});     	      	
+	      	}, 
+	      	autoFocus: true,                      
+	      	minLength: 3,
+	      	delay: 100,
+	      	position: {
+	      		my: "right top",
+	      		at: "right bottom",
+	      		collision: "none"
+	      	}
+	    });
+	});
+		
 </script>

@@ -167,8 +167,6 @@ class SearchController < ApplicationController
     request.content_type = 'UTF-8'
     response = http.request(request)
     body = JSON.parse(response.body)
-    
-    logger.info("Finished smartfill: " + body['response']['docs'].inspect)
        
     respond_to do | format |
       format.json { render :json => body['response']['docs'] }
