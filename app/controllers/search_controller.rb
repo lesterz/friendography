@@ -19,7 +19,7 @@ class SearchController < ApplicationController
         @defaultAdults = session[:adults]       
       end
      
-      if (cookies["fbsr_"+FB_APP_ID].nil?)
+      if (session[:access_token].nil? && cookies["fbsr_"+FB_APP_ID].nil?)
         logger.info("Current User Not using Facebook")
         return nil
       else        
