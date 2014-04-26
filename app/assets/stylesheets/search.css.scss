@@ -73,6 +73,13 @@ body {
     margin-left: 5px;
 }
 
+#headerInst {
+  position: relative;
+  left: 100px;
+  font-size: 16px;
+  color: #6688ff;
+}
+
 .navbar-form {
     color: #ff3399;
 }
@@ -95,8 +102,11 @@ body {
     margin-top: -50px;
 }
 }
-@media (max-width: 720px) {
 
+@media (max-width: 1024px) {
+  #headerInst {
+    display: none;
+  }
 }
 
 .row:after {
