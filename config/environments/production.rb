@@ -69,14 +69,14 @@ Fbmaps::Application.configure do
   config.eager_load = true
   
   # Travel API URI and Creds
-  TRAVEL_API_URI = "url.com/service"
-  TRAVEL_SMARTFILL_URI = "url.com/service"
-  USERNAME = "xxxx"
-  PASSWORD = "xxxx"
-  
+  TRAVEL_API_URI = ENV["FLIGHTS_API_ENDPOINT"]
+  TRAVEL_SMARTFILL_URI = ENV["SMARTFILL_ENPOINT"]
+  USERNAME = ENV["USERNAME"]
+  PASSWORD = ENV["PASSWORD"]
+
   # Facebook keys
-  FB_APP_ID = "xxxx"
-  FB_APP_SECRET = "xxxx"
+  FB_APP_ID = ENV["FB_APP_ID"]
+  FB_APP_SECRET = ENV["FB_APP_SECRET"]
   
   CHANNEL_URL = "http://friendography.com/channel.html"
   

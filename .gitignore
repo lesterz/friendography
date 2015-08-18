@@ -17,3 +17,6 @@
 # Ignore Apple directory files.
 *.DS_Store
 .elasticbeanstalk/
+
+# Ignore idea rubymine files.
+.idea/*

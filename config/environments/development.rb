@@ -22,10 +22,6 @@ Fbmaps::Application.configure do
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
 
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  config.active_record.auto_explain_threshold_in_seconds = 0.5
-
   # Do not compress assets
   config.assets.compress = false
 
@@ -36,14 +32,14 @@ Fbmaps::Application.configure do
   config.eager_load = false
   
   # Travel API URI
-  TRAVEL_API_URI = "url.com/service"
-  TRAVEL_SMARTFILL_URI = "url.com/service"
-  USERNAME = "xxxx"
-  PASSWORD = "xxxx"
+  TRAVEL_API_URI = ENV["FLIGHTS_API_ENDPOINT"]
+  TRAVEL_SMARTFILL_URI = ENV["SMARTFILL_ENPOINT"]
+  USERNAME = ENV["USERNAME"]
+  PASSWORD = ENV["PASSWORD"]
   
   # Facebook keys
-  FB_APP_ID = "xxxx"
-  FB_APP_SECRET = "xxxx"
+  FB_APP_ID = ENV["FB_APP_ID"]
+  FB_APP_SECRET = ENV["FB_APP_SECRET"]
   
   CHANNEL_URL = "http://localhost:3000/channel.html"
   

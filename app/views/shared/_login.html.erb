@@ -9,7 +9,7 @@
 	</div>	
 	<div id="fbLoginBox" data-toggle="tooltip" data-placement="top" title="<%= titleText %>">
 		<div class="fblogin">
-		  <div class="fb-login-button" size="medium" autologoutlink="true" scope="friends_location, friends_hometown, user_location, user_hometown">
+		  <div class="fb-login-button" size="medium" autologoutlink="true" scope="user_location, user_hometown">
 		  </div>
 		</div>
 	</div>
@@ -73,7 +73,7 @@
 		      } else {
 		        console.log("User cancelled login or did not fully authorize.");
 		      }
-		    }, {scope: 'user_location, user_hometown, friends_location, friends_hometown'});
+		    }, {scope: 'user_location, user_hometown'});
 		  });
 		});	
 		

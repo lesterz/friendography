@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 47.609872,
+        "longitude": -122.337794
+      },
+      "name": "Seattle, Washington"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 41.881998,
+        "longitude": -87.629395
+      },
+      "name": "Chicago, Illinois"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 18.958099,
+        "longitude": 72.822668
+      },
+      "name": "Mumbai, India"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 51.512192,
+        "longitude": -0.083403
+      },
+      "name": "London, United Kingdom"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 51.377901,
+        "longitude": -0.096831
+      },
+      "name": "Croydon, United Kingdom"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 51.658141,
+        "longitude": -0.390458
+      },
+      "name": "Watford, United Kingdom"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 41.394350,
+        "longitude": 2.166231
+      },
+      "name": "Barcelona, Spain"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 39.474723,
+        "longitude": -0.372255
+      },
+      "name": "Valencia, Spain"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 41.117198,
+        "longitude": 1.257498
+      },
+      "name": "Tarragona, Spain"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 40.413130,
+        "longitude": -3.706262
+      },
+      "name": "Madrid, Spain"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 37.980292,
+        "longitude": 23.728667
+      },
+      "name": "Athens, Greece"
+    },
+    {
+      "location": {
+        "street": "",
+        "zip": "<<not-applicable>>",
+        "latitude": 37.939739,
+        "longitude": 22.931300
+      },
+      "name": "Corinth, Greece"
+    }
+  ]
+}

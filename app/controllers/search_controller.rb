@@ -46,14 +46,18 @@ class SearchController < ApplicationController
           @currentUser.longitude = coordinates['longitude']
         end
 
-        fb_friendList = graph.get_connections("me", "friends?fields=id,name,link,picture.type(square),location,hometown")
-        
-        fqlQuery = "SELECT location, name FROM page WHERE page_id in (SELECT current_location.id from user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()))"
-        fb_locationNodes = graph.fql_query(fqlQuery)        
-        fb_friendList.each do |fb_friend|
-          friend = Friend.new(fb_friend['id'], fb_friend['name'], fb_friend['link'], fb_friend['hometown'], fb_friend['location'], fb_friend['picture'])      
+        #fb_friendList = graph.get_connections("me", "friends?fields=id,name,link,picture.type(square),location,hometown")
+        fb_friendList = JSON.parse(File.read('app/lib/data/test_fb_friends_response.json')) #Mock data
+        puts fb_friendList
+
+        #fqlQuery = "SELECT location, name FROM page WHERE page_id in (SELECT current_location.id from user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()))"
+        #fb_locationNodes = graph.fql_query(fqlQuery)
+        fb_locationNodes = JSON.parse(File.read('app/lib/data/test_fb_friends_locations_response.json')) #Mock data
+        fb_friendList['data'].each do |fb_friend|
+          puts fb_friend.to_s
+          friend = Friend.new(fb_friend['id'], fb_friend['name'], fb_friend['link'], fb_friend['hometown'], fb_friend['location'], fb_friend['picture'])
           if (fb_friend['location'])
-            f_location = fb_locationNodes.find { |x| x['name'] == fb_friend['location']['name']}
+            f_location = fb_locationNodes['data'].find { |x| x['name'] == fb_friend['location']['name']}
             friend.latitude = f_location['location']['latitude']
             friend.longitude = f_location['location']['longitude']
           end

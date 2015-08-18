@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
 //= require bootstrap
 //= require oms.min
 //= require markerclusterer
